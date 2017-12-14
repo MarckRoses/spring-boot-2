@@ -1,0 +1,50 @@
+.gradle
+/build/
+!gradle/wrapper/gradle-wrapper.jar
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+*.class
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+#Gradle temporary files
+target/
+
+#Eclipse files
+**/.project
+**/.classpath
+**/.settings/
+blog/bin/
+**/.tern-project
+
+#IntelliJ files
+**/*.iml
+**/.idea
+**/.gradle
