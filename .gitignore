@@ -48,3 +48,5 @@ blog/bin/
 **/*.iml
 **/.idea
 **/.gradle
+
+application.properties
