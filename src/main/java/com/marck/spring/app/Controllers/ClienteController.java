@@ -31,14 +31,19 @@ public class ClienteController {
 	@RequestMapping(value="/cliente/save",method=RequestMethod.POST)
 	public String Guardar(Cliente cliente) {
 		//ModelAndView model= new ModelAndView("/cliente_page");
-		int num=ccliente.insertCliente(cliente);
-		System.out.print(num);
+		if(cliente.getId()!=null&&cliente.getId()>0) {
+		ccliente.updateCliente(cliente);	
+		}else {
+		ccliente.insertCliente(cliente);
+		}
 		return "redirect:/cliente";
 	}
 	@RequestMapping(value="/cliente/add",method=RequestMethod.GET)
 	public ModelAndView Agregar() {
 		ModelAndView model= new ModelAndView("/cliente_form");
 		Cliente cform= new Cliente();
+		model.addObject("btn", "Crear Cliente");
+		model.addObject("clase", "btn btn-success");
 		model.addObject("use_form",cform);
 		return model;
 	}
@@ -47,6 +52,8 @@ public class ClienteController {
 	public ModelAndView Actualizar(@PathVariable("id") long id) {
 		ModelAndView model= new ModelAndView("/cliente_form");
 		Cliente cform= scliente.findOne(id);
+		model.addObject("btn", "Actualizar Cliente");
+		model.addObject("clase", "btn btn-primary");
 		model.addObject("use_form",cform);
 		return model;
 	}

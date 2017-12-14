@@ -18,7 +18,7 @@ public class ClienteImpl implements ICliente{
 	private final String SelectAll="Select * from Clientes";
 	private final String SelectOne="Select * from Clientes where id=:id";
 	private final String Insert="INSERT INTO Clientes(nombre,apellido,email,fecha) values(:nombre,:apellido,:email,:fecha)";
-	private final String Update="Update Cliente SET nombre=:nombre,apellido=:apellido,email=:email,fecha=:fecha where id=:id";
+	private final String Update="Update Clientes SET nombre=:nombre,apellido=:apellido,email=:email,fecha=:fecha where id=:id";
 	private final String Delete="DELETE from Clientes where id=:id";
 	NamedParameterJdbcTemplate nJdbc;
 	@Autowired
