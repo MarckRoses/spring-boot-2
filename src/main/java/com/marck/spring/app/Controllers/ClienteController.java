@@ -10,9 +10,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.marck.spring.app.Models.CimplS;
+import com.marck.spring.app.Models.ClienteDao.ClienteImpl;
 import com.marck.spring.app.Models.Entity.Cliente;
 @Controller
 public class ClienteController {
+	@Autowired
+	ClienteImpl ccliente;
 	@Autowired
 	CimplS scliente;
 	
@@ -24,6 +27,14 @@ public class ClienteController {
 		return model;
 	}
 	
+	
+	@RequestMapping(value="/cliente/save",method=RequestMethod.POST)
+	public String Guardar(Cliente cliente) {
+		//ModelAndView model= new ModelAndView("/cliente_page");
+		int num=ccliente.insertCliente(cliente);
+		System.out.print(num);
+		return "redirect:/cliente";
+	}
 	@RequestMapping(value="/cliente/add",method=RequestMethod.GET)
 	public ModelAndView Agregar() {
 		ModelAndView model= new ModelAndView("/cliente_form");
@@ -39,7 +50,11 @@ public class ClienteController {
 		model.addObject("use_form",cform);
 		return model;
 	}
-	
+	@RequestMapping(value="/cliente/delete/{id}",method=RequestMethod.GET)
+	public String Eliminar(@PathVariable("id") long id) {
+		scliente.deleteCliente(id);
+		return "redirect:/cliente";
+	}
 	
 
 }

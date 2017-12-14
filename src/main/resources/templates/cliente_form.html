@@ -49,30 +49,30 @@
 	</nav>
 
 	<div class="container">
-		<form th:action="@{/save}" th:object="${use_form}" method="post">
+		<form th:action="@{/cliente/save}" th:object="${use_form}" method="post">
 
 
 			<div class="form-group">
 				<label>Nombre:</label> <input class="form-control" name="nombre"
-					type="text" th:field="*{nombre}" />
+					type="text" th:field="*{nombre}" required="true"/>
 			</div>
 
 			<div class="form-group">
 				<label>Apellidos:</label> <input class="form-control"
-					name="apellido" type="text" th:field="*{apellido}" />
+					name="apellido" type="text" th:field="*{apellido}" required="true" />
 			</div>
 
 			<div class="form-group">
 				<label>Correo:</label> <input class="form-control" name="email"
-					type="text" th:field="*{email}" />
+					type="email" th:field="*{email}" required="true"/>
 			</div>
 
-			<div class="form-group">
-				<label>Fecha:</label> <input class="form-control" name="fecha"
-					type="date" th:field="*{fecha}" />
-			</div>
+			
 			<div class="form-group">
 				<input class="form-control" type="hidden" th:field="*{id}" />
+			</div>
+			<div class="form-group">
+				<button class="btn btn-primary" type="submit">Crear Cliente</button>
 			</div>
 		</form>
 	</div>
