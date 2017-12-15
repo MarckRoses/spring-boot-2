@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jackson.JsonObjectDeserializer;
@@ -20,6 +22,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.marck.spring.app.Models.CimplS;
 import com.marck.spring.app.Models.Response;
+import com.marck.spring.app.Models.ClienteDao.ClienteImpl;
 import com.marck.spring.app.Models.Entity.Buscar;
 import com.marck.spring.app.Models.Entity.Cliente;
 
@@ -28,6 +31,8 @@ import com.marck.spring.app.Models.Entity.Cliente;
 public class RestClienteController {
 	@Autowired
 	CimplS cs;
+	@Autowired
+	ClienteImpl sc;
 	
 	
 	@PostMapping(value="/buscar")
@@ -38,6 +43,22 @@ public class RestClienteController {
 		clione=cs.findOne(Long.parseLong(ob.getBuscar()));
 		cli.add(clione);
 		System.out.println(cli);
+		Response response= new Response("Done",cli);
+		return response;
+	}
+	
+	@PostMapping(value="/save2")
+	public Response addUpdate(HttpServletRequest request)  {
+		List<Cliente> cli= new ArrayList<Cliente>();
+		Cliente clione= new Cliente();
+		clione.setNombre(request.getParameter("nombre"));
+		clione.setApellido(request.getParameter("apellido"));
+		clione.setEmail(request.getParameter("email"));
+		sc.insertCliente(clione);
+		cli=cs.findAll();
+		clione=cli.get((cli.size()-1));
+		cli.clear();
+		cli.add(clione);
 		Response response= new Response("Done",cli);
 		return response;
 	}

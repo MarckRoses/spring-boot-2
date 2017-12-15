@@ -6,6 +6,9 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
 	crossorigin="anonymous" />
+<link
+	href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.5.3/css/bootstrapValidator.min.css'
+	rel='stylesheet' />
 <title>Insert title here</title>
 </head>
 <body>
@@ -49,102 +52,123 @@
 	</nav>
 
 	<div class="container">
-	<div class="col-md-12"><button class="btn btn-primary" type="button" th:href="@{/cliente}" >Ver Clientes</button></div>
-	<div class="col-md-12">
-		<form th:action="@{/cliente/save}" th:object="${use_form}" method="post">
-
-
-			<div class="form-group">
-				<label>Nombre:</label> <input class="form-control" name="nombre"
-					type="text" th:field="*{nombre}" required="true"/>
-			</div>
-
-			<div class="form-group">
-				<label>Apellidos:</label> <input class="form-control"
-					name="apellido" type="text" th:field="*{apellido}" required="true" />
-			</div>
-
-			<div class="form-group">
-				<label>Correo:</label> <input class="form-control" name="email"
-					type="email" th:field="*{email}" required="true" />
-			</div>
-
-			
-			<div class="form-group">
-				<input class="form-control" type="hidden" th:field="*{id}" />
-			</div>
-			<div class="form-group">
-				<button th:class="${clase}" type="submit" th:text="${btn}">Crear Cliente</button>
-			</div>
-		</form>
+		<div class="col-md-12">
+			<a class="btn btn-primary" th:href="@{/cliente}">Ver Clientes</a>
 		</div>
 		<div class="col-md-12">
-		<h3>Cliente Nuevos</h3>
-		<div class="table-responsive">
-		<table class="table table-striped">
-			<thead style="background:#1B2631  ;color:#ECF0F1;">
-				<tr>
-					<th>ID</th>
-					<th>Nombre</th>
-					<th>Apellido</th>
-					<th>Correo</th>
-					<th>Fecha</th>
-					<th>Opciones</th>
-				</tr>
-			</thead>
-			<tbody id="contenido">
-			</tbody>
-			</table>
+			<form th:object="${use_form}" method="post" th:id="${id}">
+
+
+				<div class="form-group">
+					<label for="nombre" class="control-label">Nombre:</label> <input
+						class="form-control" pattern="^[_A-z0-9]{1,}$" name="nombre"
+						type="text" th:field="*{nombre}" required="true" />
+
+				</div>
+
+				<div class="form-group">
+					<label for="apellido" class="control-label">Apellidos:</label> <input
+						class="form-control" pattern="^[_A-z0-9]{1,}$" name="apellido"
+						type="text" th:field="*{apellido}" required="true" />
+				</div>
+
+				<div class="form-group">
+					<label for="email" class="control-label">Correo:</label> <input
+						class="form-control" name="email" type="email" th:field="*{email}"
+						required="true" />
+				</div>
+				<div class='form-group'>
+					<div class='col-md-9 col-md-offset-3'>
+						<div id='messages'></div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<input class="form-control" type="hidden" th:field="*{id}" />
+				</div>
+				<div class="form-group">
+					<button th:class="${clase}" type="submit" th:id="btn2+${id}"
+						th:text="${btn}">Crear Cliente</button>
+				</div>
+			</form>
+		</div>
+		<div class="col-md-12" th:style="${style}">
+			<h3>Cliente Nuevos</h3>
+			<div class="table-responsive">
+				<table class="table table-striped">
+					<thead style="background: #1B2631; color: #ECF0F1;">
+						<tr>
+							<th>ID</th>
+							<th>Nombre</th>
+							<th>Apellido</th>
+							<th>Correo</th>
+							<th>Fecha</th>
+							<th>Opciones</th>
+						</tr>
+					</thead>
+					<tbody id="contenido">
+					</tbody>
+				</table>
 			</div>
-			</div>
+		</div>
 	</div>
 
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-		crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+	<script src='http://code.jquery.com/jquery-1.11.1.min.js'></script>
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
 		integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
 		crossorigin="anonymous"></script>
-		
-		<script>
+	<script
+		src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.5.3/js/bootstrapValidator.min.js'></script>
+	<script
+		src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.5.3/js/language/es_ES.min.js'></script>
+
+
+	<script>
+		$(contenido).html("");
+
 		$(function() {
-			$("#buscar").keyup(
-							function() {
-								buscador();
-							});
+
+			$("#addCliente").submit(function() {
+				agregarDinamico();
+				return false;
+			});
+			$("#btnaddCliente").click(function() {
+
+			});
 
 		});
-		
-		function buscador(){
-			 var search = {};
-			    search["buscar"] = $("#buscar").val();
 
-			    $.ajax({
-			        type: "POST",
-			        contentType: "application/json",
-			        url:"/cliente/buscar",
-			        data: JSON.stringify(search),
-			        dataType: 'json',
-			        cache: false,
-			        timeout: 600000,
-			        beforeSend: function(){
-			        },
-			        success: function (data) {
-			        	var l=data["data"];			 
-			        	$(contenido).html("");
-			        	for( i in l){
-			        	var d=new Date(l[i].fecha);
-			        			var s="<tr><td>"+l[i].id+"</td><td>"+l[i].nombre+"</td><td>"+l[i].apellido+"</td><td>"+l[i].email+"</td><td>"+d.toGMTString()+"</td><td>";
-								s+='<div class="col-md-3">';
-								s+='<a class="btn btn-default" href="/cliente/update/'+l[i].id+'"> <span class="glyphicon glyphicon-pencil"></span>Editar';
-								s+='</a></div><div class="col-md-3">';
-								s+='<a class="btn btn-danger" href="/cliente/delete/'+l[i].id+'"> <span class="glyphicon glyphicon-remove-sign"></span>Eliminar';
-								s+="</a></div></td></tr>";
-						$("#contenido").append(s);
-			        	}
-			           }
-			    });
+		function agregarDinamico() {
+			$.ajax({
+						type : "POST",
+						dataType : "json",
+						url : "/cliente/save2",
+						data : $('#addCliente').serialize(),
+						cache : false,
+						timeout : 600000,
+						beforeSend : function() {
+						},
+						success : function(data) {
+							var l = data["data"];
+
+							for (i in l) {
+								var d = new Date(l[i].fecha);
+								var s = "<tr><td>" + l[i].id + "</td><td>"
+										+ l[i].nombre + "</td><td>"
+										+ l[i].apellido + "</td><td>"
+										+ l[i].email + "</td><td>"
+										+ d.toGMTString() + "</td><td>";
+								s += '<div class="col-md-3">';
+								s += '<a class="btn btn-default" href="/cliente/update/'+l[i].id+'"> <span class="glyphicon glyphicon-pencil"></span>Editar';
+								s += '</a></div><div class="col-md-3">';
+								s += '<a class="btn btn-danger" href="/cliente/delete/'+l[i].id+'"> <span class="glyphicon glyphicon-remove-sign"></span>Eliminar';
+								s += "</a></div></td></tr>";
+								$("#contenido").append(s);
+							}
+						}
+					});
 
 		}
 	</script>

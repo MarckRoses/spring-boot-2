@@ -51,6 +51,8 @@ public class ClienteController {
 		model.addObject("btn", "Crear Cliente");
 		model.addObject("clase", "btn btn-success");
 		model.addObject("use_form", cform);
+		model.addObject("id", "addCliente");
+		model.addObject("style", "block");
 		return model;
 	}
 
@@ -61,6 +63,8 @@ public class ClienteController {
 		model.addObject("btn", "Actualizar Cliente");
 		model.addObject("clase", "btn btn-primary");
 		model.addObject("use_form", cform);
+		model.addObject("id", "updateCliente");
+		model.addObject("style", "display:none");
 		return model;
 	}
 
