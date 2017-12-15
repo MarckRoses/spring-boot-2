@@ -21,7 +21,6 @@ public class Cliente implements Serializable{
 		this.id = id;
 	}
 	public Long getId() {
-		System.out.println("HolaMundo");
 		return id;
 	}
 	public void setId(Long id) {

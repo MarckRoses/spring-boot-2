@@ -49,17 +49,26 @@ public class RestClienteController {
 	
 	@PostMapping(value="/save2")
 	public Response addUpdate(HttpServletRequest request)  {
+		Response response;
 		List<Cliente> cli= new ArrayList<Cliente>();
 		Cliente clione= new Cliente();
 		clione.setNombre(request.getParameter("nombre"));
 		clione.setApellido(request.getParameter("apellido"));
 		clione.setEmail(request.getParameter("email"));
-		sc.insertCliente(clione);
-		cli=cs.findAll();
-		clione=cli.get((cli.size()-1));
-		cli.clear();
-		cli.add(clione);
-		Response response= new Response("Done",cli);
+		if(request.getParameter("id")=="") {
+			sc.insertCliente(clione);
+			cli=cs.findAll();
+			clione=cli.get((cli.size()-1));
+			cli.clear();
+			cli.add(clione);
+			response= new Response("Done",cli);
+		}else {
+			clione.setId(Long.parseLong(request.getParameter("id")));
+			sc.updateCliente(clione);
+			response= new Response("Done","actualizado");
+		}
+		
+		
 		return response;
 	}
 }

@@ -55,20 +55,24 @@
 		<div class="col-md-12">
 			<a class="btn btn-primary" th:href="@{/cliente}">Ver Clientes</a>
 		</div>
+		<div class="col-md-12"> <hr/></div>
+		<div id="respuesta" class="col-md-12">
+		
+		</div>
 		<div class="col-md-12">
 			<form th:object="${use_form}" method="post" th:id="${id}">
 
 
 				<div class="form-group">
 					<label for="nombre" class="control-label">Nombre:</label> <input
-						class="form-control" pattern="^[_A-z0-9]{1,}$" name="nombre"
+						class="form-control"  name="nombre"
 						type="text" th:field="*{nombre}" required="true" />
 
 				</div>
 
 				<div class="form-group">
 					<label for="apellido" class="control-label">Apellidos:</label> <input
-						class="form-control" pattern="^[_A-z0-9]{1,}$" name="apellido"
+						class="form-control"  name="apellido"
 						type="text" th:field="*{apellido}" required="true" />
 				</div>
 
@@ -134,9 +138,12 @@
 				agregarDinamico();
 				return false;
 			});
-			$("#btnaddCliente").click(function() {
-
+			
+			$("#updateCliente").submit(function(){
+				Actualiza();
+				return false;
 			});
+			
 
 		});
 
@@ -154,6 +161,7 @@
 							var l = data["data"];
 
 							for (i in l) {
+								$("#respuesta").html('<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>Cliente '+l[i].nombre+" "+l[i].apellido+' agregado correctamente</strong></div>');
 								var d = new Date(l[i].fecha);
 								var s = "<tr><td>" + l[i].id + "</td><td>"
 										+ l[i].nombre + "</td><td>"
@@ -166,6 +174,27 @@
 								s += '<a class="btn btn-danger" href="/cliente/delete/'+l[i].id+'"> <span class="glyphicon glyphicon-remove-sign"></span>Eliminar';
 								s += "</a></div></td></tr>";
 								$("#contenido").append(s);
+							}
+						}
+					});
+
+		}
+		
+		function Actualiza() {
+			$.ajax({
+						type : "POST",
+						dataType : "json",
+						url : "/cliente/save2",
+						data : $('#updateCliente').serialize(),
+						cache : false,
+						timeout : 600000,
+						beforeSend : function() {
+						},
+						success : function(data) {
+							var l = data["data"];
+
+							if(l=="actualizado"){
+								$("#respuesta").html('<div class="alert alert-info alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>Cliente Actualizado correctamente</strong></div>');
 							}
 						}
 					});
