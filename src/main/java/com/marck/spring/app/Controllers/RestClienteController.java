@@ -42,7 +42,6 @@ public class RestClienteController {
 		Buscar ob = new ObjectMapper().readValue(valor, Buscar.class);
 		clione=cs.findOne(Long.parseLong(ob.getBuscar()));
 		cli.add(clione);
-		System.out.println(cli);
 		Response response= new Response("Done",cli);
 		return response;
 	}
