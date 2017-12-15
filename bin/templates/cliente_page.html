@@ -2,14 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
 	crossorigin="anonymous" />
 <title>Insert title here</title>
 </head>
-<body>
-	<nav class="navbar navbar-inverse navbar-fixed">
+<body >
+	<nav class="navbar navbar-inverse navbar-static">
 		<div class="container-fluid">
 			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header">
@@ -59,13 +60,18 @@
 				</a>
 			</div>
 		</div>
+		<div class="row">
+		<div class="col-md-12">
+		<div class="row"><span class="col-xs-12"> </span></div>
+		<div class="table-responsive">
 		<table class="table table-striped">
-			<thead class="thead-dark">
+			<thead style="background:#1B2631  ;color:#ECF0F1;">
 				<tr>
 					<th>ID</th>
 					<th>Nombre</th>
 					<th>Apellido</th>
 					<th>Correo</th>
+					<th>Fecha</th>
 					<th>Opciones</th>
 				</tr>
 			</thead>
@@ -75,8 +81,9 @@
 					<td th:text="${cliente.nombre}">Nombre</td>
 					<td th:text="${cliente.apellido}">Apellido</td>
 					<td th:text="${cliente.email}">Correo</td>
+					<td th:text="${cliente.fecha}">fecha</td>
 					<td>
-						<div class="row">
+						
 							<div class="col-md-3">
 								<a th:href="@{/cliente/update/}+${cliente.id}"
 									class="btn btn-default"> <span
@@ -89,13 +96,17 @@
 									class="glyphicon glyphicon-remove-sign"></span>Eliminar
 								</a>
 							</div>
-						</div>
+						
 					</td>
 				</tr>
 			</tbody>
 		</table>
+		</div>
+		</div>
+		</div>
+		
 	</div>
-	<div id="result"></div>
+	
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
@@ -118,7 +129,7 @@
 			    $.ajax({
 			        type: "POST",
 			        contentType: "application/json",
-			        url:"/cliente/api/cliente/buscar",
+			        url:"/cliente/buscar",
 			        data: JSON.stringify(search),
 			        dataType: 'json',
 			        cache: false,
@@ -129,13 +140,13 @@
 			        	var l=data["data"];			 
 			        	$(contenido).html("");
 			        	for( i in l){
-			        	
-			        			var s="<tr><td>"+l[i].id+"</td><td>"+l[i].nombre+"</td><td>"+l[i].apellido+"</td><td>"+l[i].email+"</td><td>";
-								s+='<div class="row"><div class="col-md-3">';
+			        	var d=new Date(l[i].fecha);
+			        			var s="<tr><td>"+l[i].id+"</td><td>"+l[i].nombre+"</td><td>"+l[i].apellido+"</td><td>"+l[i].email+"</td><td>"+d.toGMTString()+"</td><td>";
+								s+='<div class="col-md-3">';
 								s+='<a class="btn btn-default" href="/cliente/update/'+l[i].id+'"> <span class="glyphicon glyphicon-pencil"></span>Editar';
 								s+='</a></div><div class="col-md-3">';
 								s+='<a class="btn btn-danger" href="/cliente/delete/'+l[i].id+'"> <span class="glyphicon glyphicon-remove-sign"></span>Eliminar';
-								s+="</a></div></div></td></tr>";
+								s+="</a></div></td></tr>";
 						$("#contenido").append(s);
 			        	}
 			           }
