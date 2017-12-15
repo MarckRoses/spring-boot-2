@@ -62,4 +62,6 @@ public class CimplOther implements ICliente{
 		return insert.update(Update, cliente);
 	}
 
+
+
 }
