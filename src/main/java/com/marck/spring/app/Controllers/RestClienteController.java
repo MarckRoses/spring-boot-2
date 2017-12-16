@@ -29,8 +29,8 @@ import com.marck.spring.app.Models.Entity.Cliente;
 @RestController
 @RequestMapping("cliente/")
 public class RestClienteController {
-	@Autowired
-	CimplS cs;
+	/*@Autowired
+	CimplS cs;*/
 	@Autowired
 	ClienteImpl sc;
 	
@@ -39,11 +39,35 @@ public class RestClienteController {
 	public Response getResource(@RequestBody String valor) throws JsonParseException, JsonMappingException, IOException {
 		List<Cliente> cli= new ArrayList<Cliente>();
 		Cliente clione= new Cliente();
+		Response response;
+		try {
 		Buscar ob = new ObjectMapper().readValue(valor, Buscar.class);
-		clione=cs.findOne(Long.parseLong(ob.getBuscar()));
+		if(ob.getBuscar().equals("")) {
+			cli=sc.findAll();//cs.findAll();
+		}else {
+		clione=sc.findOne(Long.parseLong(ob.getBuscar()));//cs.findOne(Long.parseLong(ob.getBuscar()));
+		if(clione.getNombre()==null) {
+			clione.setNombre("Datos");
+			clione.setApellido("no");
+			clione.setId(Long.parseLong("0"));
+			clione.setEmail("encontrados");
+			cli.add(clione);
+		}else {
 		cli.add(clione);
-		Response response= new Response("Done",cli);
+		}
+		}
+		response= new Response("Done",cli);
 		return response;
+		}catch(Exception e){
+			System.out.println(e.getStackTrace());
+			clione.setNombre("Datos");
+			clione.setApellido("no");
+			clione.setId(Long.parseLong("0"));
+			clione.setEmail("encontrados");
+			cli.add(clione);
+			response= new Response("Done",cli);
+		return response;
+		}
 	}
 	
 	@PostMapping(value="/save2")
@@ -56,7 +80,7 @@ public class RestClienteController {
 		clione.setEmail(request.getParameter("email"));
 		if(request.getParameter("id")=="") {
 			sc.insertCliente(clione);
-			cli=cs.findAll();
+			cli=sc.findAll();//cs.findAll();
 			clione=cli.get((cli.size()-1));
 			cli.clear();
 			cli.add(clione);

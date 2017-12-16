@@ -25,7 +25,7 @@ public class CimplOther implements ICliente{
     public void setDataSource(DataSource ds) {
         dataSource = ds;
     }
-
+    
 	@Override
 	public List<Cliente> findAll() {
 		JdbcTemplate select= new JdbcTemplate(dataSource);
@@ -38,9 +38,16 @@ public class CimplOther implements ICliente{
 		Cliente c= new Cliente();
 		c.setId(id);
 		Object o;
+		try {
+			
 		c=(Cliente) selectone.queryForObject(SelectOne, new ClienteRow(),id);
-		
 		return c;
+		}catch(Exception e) 
+		{
+			System.out.println(e.getMessage());
+			return c;
+		}
+		
 	}
 
 	@Override

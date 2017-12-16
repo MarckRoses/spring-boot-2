@@ -22,13 +22,13 @@ import com.marck.spring.app.Models.Entity.Cliente;
 public class ClienteController {
 	@Autowired
 	ClienteImpl ccliente;
-	@Autowired
-	CimplS scliente;
+	/*@Autowired
+	CimplS scliente;*/
 
 	@RequestMapping(value = "/cliente", method = RequestMethod.GET)
 	public ModelAndView Clientes() {
 		ModelAndView model = new ModelAndView("/cliente_page");
-		List<Cliente> c = scliente.findAll();
+		List<Cliente> c = ccliente.findAll();//scliente.findAll();
 		model.addObject("clientes", c);
 		return model;
 	}
@@ -59,7 +59,7 @@ public class ClienteController {
 	@RequestMapping(value = "/cliente/update/{id}", method = RequestMethod.GET)
 	public ModelAndView Actualizar(@PathVariable("id") long id) {
 		ModelAndView model = new ModelAndView("/cliente_form");
-		Cliente cform = scliente.findOne(id);
+		Cliente cform = ccliente.findOne(id);//scliente.findOne(id);
 		model.addObject("btn", "Actualizar Cliente");
 		model.addObject("clase", "btn btn-primary");
 		model.addObject("use_form", cform);
@@ -70,7 +70,7 @@ public class ClienteController {
 
 	@RequestMapping(value = "/cliente/delete/{id}", method = RequestMethod.GET)
 	public String Eliminar(@PathVariable("id") long id) {
-		scliente.deleteCliente(id);
+		ccliente.deleteCliente(id);//scliente.deleteCliente(id);
 		return "redirect:/cliente";
 	}
 
@@ -79,7 +79,7 @@ public class ClienteController {
 	@ResponseBody
 	public Cliente handleAllUserRequest() {
 		Long n=(long) 1;
-		return scliente.findOne(n);
+		return ccliente.findOne(n);//scliente.findOne(n);
 	}
 
 }
