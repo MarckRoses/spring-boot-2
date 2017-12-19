@@ -8,18 +8,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.marck.spring.app.Models.CimplS;
+import com.marck.spring.app.Models.ClienteHikariService;
 import com.marck.spring.app.Models.ClienteSImpl;
 import com.marck.spring.app.Models.Entity.Cliente;
 
 @Controller
 public class IndexController {
-	@Autowired
-	CimplS scliente;
+	ClienteHikariService ch=new ClienteHikariService();
 	
 	@GetMapping("/")
 	public String Index(Model model) {
 		model.addAttribute("titulo", "Hola desde gradle");
-		List<Cliente> c=scliente.findAll();
+		List<Cliente> c=ch.findAll();
 		model.addAttribute("clientes", c);
 		return "index";
 	}
