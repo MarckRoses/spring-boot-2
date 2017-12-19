@@ -18,7 +18,7 @@ public class DataSourceJdbcTemplate {
 	private HikariDataSource dataSource() {
         final HikariDataSource ds = new HikariDataSource();
         ds.setMaximumPoolSize(10);
-        ds.setDriverClassName("org.postgresql.Driver"); 
+        ds.setDriverClassName("org.postgresql.ds.PGSimpleDataSource"); 
         ds.setJdbcUrl("jdbc:postgresql://localhost:5432/prueba"); ;
         ds.setUsername("marck");
         ds.setPassword("rosas");
