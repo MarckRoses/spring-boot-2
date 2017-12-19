@@ -16,7 +16,7 @@ public class CimplOther implements ICliente{
 	private final String SelectAll="Select * from Clientes";
 	private final String SelectOne="Select * from Clientes where id=?";
 	private final String Insert="INSERT INTO Clientes(nombre,apellido,email) values(?,?,?)";
-	private final String Update="Update Clientes SET nombre=?;pellido=?,email=?,fecha=? where id=?";
+	private final String Update="Update Clientes SET nombre=?;pellido=?,email=? where id=?";
 	private final String Delete="DELETE from Clientes where id=?";
 	
 	@Autowired
@@ -25,7 +25,6 @@ public class CimplOther implements ICliente{
     public void setDataSource(DataSource ds) {
         dataSource = ds;
     }
-    
 	@Override
 	public List<Cliente> findAll() {
 		JdbcTemplate select= new JdbcTemplate(dataSource);
@@ -53,7 +52,7 @@ public class CimplOther implements ICliente{
 	@Override
 	public int insertCliente(Cliente cliente) {
 		JdbcTemplate insert=new JdbcTemplate(dataSource);
-		return insert.update(Insert, cliente);
+		return insert.update(Insert,cliente.getNombre(),cliente.getApellido(),cliente.getEmail());
 	}
 
 	@Override
@@ -65,7 +64,7 @@ public class CimplOther implements ICliente{
 	@Override
 	public int updateCliente(Cliente cliente) {
 		JdbcTemplate insert=new JdbcTemplate(dataSource);
-		return insert.update(Update, cliente);
+		return insert.update(Update, cliente.getNombre(),cliente.getApellido(),cliente.getEmail(),cliente.getId());
 	}
 
 

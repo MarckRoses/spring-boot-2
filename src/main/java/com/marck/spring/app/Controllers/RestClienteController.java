@@ -29,8 +29,8 @@ import com.marck.spring.app.Models.Entity.Cliente;
 @RestController
 @RequestMapping("cliente/")
 public class RestClienteController {
-	/*@Autowired
-	CimplS cs;*/
+	@Autowired
+	CimplS cs;
 	@Autowired
 	ClienteImpl sc;
 	

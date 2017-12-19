@@ -28,6 +28,8 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-jdbc')
 	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
 	runtime('org.springframework.boot:spring-boot-devtools')
+	compile("org.springframework.boot:spring-boot-starter-data-redis")
+	compile (group: 'com.zaxxer', name: 'HikariCP', version: '2.3.2')
 	runtime('com.h2database:h2')
 	compile("mysql:mysql-connector-java:5.1.44")
 	runtime('org.postgresql:postgresql')
