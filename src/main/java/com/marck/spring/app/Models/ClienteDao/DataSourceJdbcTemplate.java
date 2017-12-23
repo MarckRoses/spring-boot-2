@@ -22,6 +22,10 @@ public class DataSourceJdbcTemplate {
         ds.setJdbcUrl("jdbc:postgresql://localhost:5432/prueba"); ;
         ds.setUsername("marck");
         ds.setPassword("rosas");
+        ds.setMinimumIdle(4);
+        ds.setIdleTimeout(30000);
+        ds.setMaxLifetime(30000);
+        ds.setConnectionTimeout(5000);
         return ds;
      }
 

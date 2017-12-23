@@ -15,7 +15,7 @@ public class CimplOther implements ICliente{
 	
 	private final String SelectAll="Select * from Clientes";
 	private final String SelectOne="Select * from Clientes where id=?";
-	private final String Insert="INSERT INTO Clientes(nombre,apellido,email) values(?,?,?)";
+	private final String Insert="INSERT INTO Clientes(nombre,apellido,email) values(encrypt(?),?,?)";
 	private final String Update="Update Clientes SET nombre=?;pellido=?,email=? where id=?";
 	private final String Delete="DELETE from Clientes where id=?";
 	
